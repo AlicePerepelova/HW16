@@ -8,6 +8,7 @@ import models.responses.CreateUserResponseModel;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import specifications.LoginSpec;
 
 import static helpers.CustomAllureListener.withCustomTemplates;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static specifications.LoginSpec.loginRequestSpec;
 
 public class ApiStart {
   @BeforeAll
@@ -59,8 +61,8 @@ public class ApiStart {
     newUser.setName("morpheus");
     newUser.setJob("leader");
 
-    CreateUserResponseModel response= given()
-      .filter(withCustomTemplates())
+    CreateUserResponseModel response= given(loginRequestSpec)
+
       .body(newUser)
       .log().uri()
       .contentType(ContentType.JSON)

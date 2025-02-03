@@ -16,8 +16,7 @@ public class LoginSpec {
     .log().uri()
     .log().body()
     .log().headers()
-    .contentType(JSON)
-    .basePath("/api/login");
+    .contentType(JSON);
 
   public static ResponseSpecification loginResponseSpec = new ResponseSpecBuilder()
     .expectStatusCode(200)
