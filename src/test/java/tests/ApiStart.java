@@ -9,9 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
-import static org.assertj.core.api.Assertions.assertThat;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static specifications.SuccessCreateSpec.*;
 
@@ -25,20 +24,20 @@ public class ApiStart {
   @Test
   @DisplayName("Успешная проверка пользователя по id и email")
   void checkUser() {
-    LoginBodyModel response=
-    step("Response user id and email", ()->
-    given(defaultRequestSpec)
-      .when()
-      .get("/users/2")
-      .then()
-      .spec(createResponseSpec200)
-      .extract().as(LoginBodyModel.class)
-    );
+    LoginBodyModel response =
+      step("Response user id and email", () ->
+        given(defaultRequestSpec)
+          .when()
+          .get("/users/2")
+          .then()
+          .spec(createResponseSpec200)
+          .extract().as(LoginBodyModel.class)
+      );
 
-    step("Check that user exist", ()->{
-        assertThat(response.getId()).isEqualTo("2");
-        assertThat(response.getEmail()).isEqualTo("janet.weaver@reqres.in");
-      });
+    step("Check that user exist", () -> {
+      assertThat(response.getId()).isEqualTo("2");
+      assertThat(response.getEmail()).isEqualTo("janet.weaver@reqres.in");
+    });
 //      .body("data.id", is(2))
 //      .body("data.email", is("janet.weaver@reqres.in"));
   }
@@ -46,17 +45,17 @@ public class ApiStart {
   @Test
   @DisplayName("Проверка, что в списке 6 пользователей")
   void checkListUserSize() {
-    ListUsersBodyModel response=  step("Check request list of users", () ->
-    given(defaultRequestSpec)
+    ListUsersBodyModel response = step("Check request list of users", () ->
+      given(defaultRequestSpec)
 
-      .when()
-      .queryParam("page", "2")
-      .get("/users")
-      .then()
-      .spec(createResponseSpec200)
-      .extract().as(ListUsersBodyModel.class)
+        .when()
+        .queryParam("page", "2")
+        .get("/users")
+        .then()
+        .spec(createResponseSpec200)
+        .extract().as(ListUsersBodyModel.class)
     );
-step("Check response that list of users have size 6", ()->
+    step("Check response that list of users have size 6", () ->
       assertThat(response.getUserSize()).isEqualTo(6));
   }
 
@@ -67,21 +66,21 @@ step("Check response that list of users have size 6", ()->
     newUser.setName("morpheus");
     newUser.setJob("leader");
 
-    CreateUserResponseModel response= step("Make request", ()->
+    CreateUserResponseModel response = step("Make request", () ->
       given(defaultRequestSpec)
 
-      .body(newUser)
-      .when()
-      .post("/users")
-      .then()
-      .spec(createResponseSpec201)
-      .extract().as(CreateUserResponseModel.class));
+        .body(newUser)
+        .when()
+        .post("/users")
+        .then()
+        .spec(createResponseSpec201)
+        .extract().as(CreateUserResponseModel.class));
 
-    step("Check response", ()-> {
-    assertThat(response.getName()).isEqualTo("morpheus");
-    assertThat(response.getJob()).isEqualTo("leader");
-    assertThat(response.getId()).isNotNull();
-    assertThat(response.getCreatedAt()).isNotNull();
+    step("Check response", () -> {
+      assertThat(response.getName()).isEqualTo("morpheus");
+      assertThat(response.getJob()).isEqualTo("leader");
+      assertThat(response.getId()).isNotNull();
+      assertThat(response.getCreatedAt()).isNotNull();
     });
   }
 
@@ -93,15 +92,15 @@ step("Check response that list of users have size 6", ()->
     newUser.setJob("");
     newUser.setJob("");
 
-    ErrorCreateUserModel response= step("Make request", ()->
-    given(defaultRequestSpec)
-      .body(newUser)
-      .when()
-      .post("/users")
-      .then()
-      .spec(createResponseSpec400)
-      .extract().as(ErrorCreateUserModel.class));
-    step("Check response", ()->
+    ErrorCreateUserModel response = step("Make request", () ->
+      given(defaultRequestSpec)
+        .body(newUser)
+        .when()
+        .post("/users")
+        .then()
+        .spec(createResponseSpec400)
+        .extract().as(ErrorCreateUserModel.class));
+    step("Check response", () ->
       assertEquals("Missing password", response.getError()));
 
   }
@@ -109,35 +108,35 @@ step("Check response that list of users have size 6", ()->
   @Test
   @DisplayName("Успешная регистрация пользователя")
   void successfulRegister() {
-    SuccessRegRequestUserModel user=new SuccessRegRequestUserModel();
+    SuccessRegRequestUserModel user = new SuccessRegRequestUserModel();
     user.setEmail("eve.holt@reqres.in");
     user.setPassword("pistol");
 
-    RegistrationUserModel response= step("Make request", ()->
-    given(defaultRequestSpec)
-      .body(user)
-      .when()
-      .post("/register")
-      .then()
-      .spec(createResponseSpec200)
-      .extract().as(RegistrationUserModel.class));
-    step("Check response", ()-> {
-    assertThat(response.getId()).isNotNull();
-    assertThat(response.getToken()).isNotNull();
-  });
+    RegistrationUserModel response = step("Make request", () ->
+      given(defaultRequestSpec)
+        .body(user)
+        .when()
+        .post("/register")
+        .then()
+        .spec(createResponseSpec200)
+        .extract().as(RegistrationUserModel.class));
+    step("Check response", () -> {
+      assertThat(response.getId()).isNotNull();
+      assertThat(response.getToken()).isNotNull();
+    });
   }
 
   @Test
   @DisplayName("Удаление пользователя")
   void checkDeleteUser() {
-step("Delete user", ()->
-    given(defaultRequestSpec)
-      .when()
-      .delete("/users/{id}", 2)
-      .then()
-      .assertThat()
-      .log().all()
-      .spec(createResponseSpec204));
+    step("Delete user", () ->
+      given(defaultRequestSpec)
+        .when()
+        .delete("/users/{id}", 2)
+        .then()
+        .assertThat()
+        .log().all()
+        .spec(createResponseSpec204));
   }
 }
 
