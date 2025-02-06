@@ -18,10 +18,10 @@ public class ListUsersBodyModel
   @Data
   public static class DataModel {
     private Integer id;
-    private String name;
-    private Integer year;
-    private String color;
-    private String pantone_value;
+    private String email;
+    private String first_name;
+    private String last_name;
+    private String avatar;
   }
 
   @Data

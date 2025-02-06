@@ -52,7 +52,9 @@ public class ApiStart {
         .then()
         .spec(createResponseSpec200)
         .extract().as(ListUsersBodyModel.class)
+
     );
+    System.out.println("Response: " + response);
     step("Check response that list of users have size 6", () ->
       assertThat(response.getData()).hasSize(6));
   }
