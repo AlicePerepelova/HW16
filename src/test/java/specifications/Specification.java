@@ -10,7 +10,7 @@ import static io.restassured.filter.log.LogDetail.STATUS;
 import static io.restassured.RestAssured.with;
 import static io.restassured.http.ContentType.JSON;
 
-public class SuccessCreateSpec {
+public class Specification {
   public static RequestSpecification defaultRequestSpec  =with()
           .filter(withCustomTemplates())
           .log().all()
@@ -28,7 +28,6 @@ public class SuccessCreateSpec {
   public static ResponseSpecification createResponseSpec204=new ResponseSpecBuilder()
     .expectStatusCode(204)
     .log(STATUS)
-    .log(BODY)
     .build();
   public static ResponseSpecification createResponseSpec400=new ResponseSpecBuilder()
     .expectStatusCode(400)

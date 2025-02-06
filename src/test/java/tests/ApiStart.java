@@ -12,7 +12,7 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static specifications.SuccessCreateSpec.*;
+import static specifications.Specification.*;
 
 public class ApiStart {
   @BeforeAll
@@ -87,7 +87,6 @@ public class ApiStart {
   void unsuccessfulcheckCreateUser() {
     CreateUserModel newUser = new CreateUserModel();
     newUser.setName("");
-    newUser.setJob("");
     newUser.setJob("");
 
     ErrorCreateUserModel response = step("Make request", () ->
