@@ -35,7 +35,7 @@ public class ApiStart {
       );
 
     step("Check that user exist", () -> {
-      assertThat(response.getData().getId()).isEqualTo("2");
+      assertThat(response.getData().getId()).isEqualTo(2);
       assertThat(response.getData().getEmail()).isEqualTo("janet.weaver@reqres.in");
     });
   }
