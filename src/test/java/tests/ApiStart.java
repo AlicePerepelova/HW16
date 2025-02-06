@@ -24,22 +24,20 @@ public class ApiStart {
   @Test
   @DisplayName("Успешная проверка пользователя по id и email")
   void checkUser() {
-    LoginBodyModel response =
+    UserSingleResponseModel response =
       step("Response user id and email", () ->
         given(defaultRequestSpec)
           .when()
           .get("/users/2")
           .then()
           .spec(createResponseSpec200)
-          .extract().as(LoginBodyModel.class)
+          .extract().as(UserSingleResponseModel.class)
       );
 
     step("Check that user exist", () -> {
-      assertThat(response.getId()).isEqualTo("2");
-      assertThat(response.getEmail()).isEqualTo("janet.weaver@reqres.in");
+      assertThat(response.getData().getId()).isEqualTo("2");
+      assertThat(response.getData().getEmail()).isEqualTo("janet.weaver@reqres.in");
     });
-//      .body("data.id", is(2))
-//      .body("data.email", is("janet.weaver@reqres.in"));
   }
 
   @Test
@@ -56,7 +54,7 @@ public class ApiStart {
         .extract().as(ListUsersBodyModel.class)
     );
     step("Check response that list of users have size 6", () ->
-      assertThat(response.getUserSize()).isEqualTo(6));
+      assertThat(response.getData()).hasSize(6));
   }
 
   @Test
